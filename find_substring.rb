@@ -8,7 +8,7 @@
 #
 ##################################################################
 class String
-  def substr
+  def substr(sub_str)
     raise RuntimeError if empty?
 
     puts self

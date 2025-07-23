@@ -18,11 +18,11 @@ class TestFindSubstring < Minitest::Test
 
   def test_empty_string
     assert_raises(RuntimeError) do
-      String.new('').substr
+      String.new('').substr('hi')
     end
 
     assert_raises(RuntimeError) do
-      ''.substr
+      ''.substr('hi')
     end
   end
 end
