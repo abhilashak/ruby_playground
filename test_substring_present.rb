@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative 'find_substring'
+require_relative 'substring_present'
 
 ################################################################
 # This is the test suite for finding a substring in ruby string
@@ -18,11 +18,16 @@ class TestFindSubstring < Minitest::Test
 
   def test_empty_string
     assert_raises(RuntimeError) do
-      String.new('').substr('hi')
+      String.new('').substr?('hi')
     end
 
     assert_raises(RuntimeError) do
-      ''.substr('hi')
+      ''.substr?('hi')
     end
+  end
+
+  def test_str_length_less_then_two
+    assert_equal true, String.new('hj').substr?('h')
+    assert_equal true, String.new('hi').substr?('i')
   end
 end
