@@ -2,33 +2,32 @@
 
 ##################################################################
 #  This new string method find a substring in the provided string
+#  Condition: Don't allowed to use Ruby's built in `include?` method
 #  Usage:
-#    "find here about string alfred is that fine?".substr('alfred') => true
-#    "find here about string alfred is that fine?".substr('alwin') => false
+#    "My name is alfred. What is your name?".substr('alfred') => true
+#    "My name is alfred. What is your name?".substr('at is y') => true
+#    "My name is alfred. What is your name?".substr('alwin') => false
 #
 ##################################################################
 class String
   def substr?(sub_str)
     raise RuntimeError if empty?
 
-    @stored_value = String.new
+    # If substring is longer than the main string, it can't be found
+    return false if sub_str.length > length
 
-    # string length and substring length are same
-    @stored_value = self if strip.length == sub_str.strip
+    # Sliding window approach
+    window_size = sub_str.length
 
-    # set stored value
-    # string length and substring length are different
-    sub_str.each_char do |char|
-      @stored_value << char
+    # Slide the window from left to right
+    (0..(length - window_size)).each do |start_pos|
+      # Extract the current window
+      current_window = self[start_pos, window_size]
 
-      @stored_value[0] = '' unless @stored_value[0] == char
+      # Check if current window matches the substring
+      return true if current_window == sub_str
     end
 
-    # find match
-    match_stored_value?(sub_str)
-  end
-
-  def match_stored_value?(sub_str)
-    @stored_value == sub_str
+    false
   end
 end

@@ -30,4 +30,13 @@ class TestFindSubstring < Minitest::Test
     assert_equal true, String.new('hj').substr?('h')
     assert_equal true, String.new('hi').substr?('i')
   end
+
+  def test_str_more_than_two_char
+    assert_equal true, String.new('hi the').substr?('hi')
+    assert_equal true, String.new('hi the main land of the city').substr?('hi the main')
+    assert_equal true, String.new('hi the main land of the city').substr?('land')
+    assert_equal true, String.new('hi the main land of the city').substr?('nd of')
+    assert_equal false, String.new('hi the main land of the city').substr?('burn')
+    assert_equal false, String.new('hi the main land of the city').substr?('mains')
+  end
 end
