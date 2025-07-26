@@ -2,7 +2,7 @@
 
 ##################################################################
 #  This new string method find a substring in the provided string
-#  Condition: Don't allowed to use Ruby's built in `include?` method
+#  Condition: Without using Ruby's built in methods like `include?`
 #  Usage:
 #    "My name is alfred. What is your name?".substr('alfred') => true
 #    "My name is alfred. What is your name?".substr('at is y') => true
