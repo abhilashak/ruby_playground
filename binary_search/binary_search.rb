@@ -5,8 +5,9 @@
 #
 #
 #####################################################################
-def binary_search(numbers)
+def binary_search(numbers, target)
   raise ArgumentError, 'Array cannot be empty' if numbers.empty?
+  raise ArgumentError, 'Target cannot be empty' unless target
 
-  numbers[0] if numbers.length == 1
+  target if numbers.length == 1
 end

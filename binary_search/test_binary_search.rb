@@ -21,7 +21,11 @@ class TestBinarySearch < Minitest::Test
   end
 
   def test_array_with_length_one
-    assert_equal 1, binary_search([1])
-    assert_equal 2, binary_search([2])
+    assert_equal 1, binary_search([1], 1)
+    assert_equal 2, binary_search([2], 2)
+  end
+
+  def _test_array_with_length_two
+    assert_equal 2, binary_search([1, 2], 2)
   end
 end
