@@ -13,7 +13,10 @@ class TestBinarySearch < Minitest::Test
 
   def test_empty_array
     assert_raises ArgumentError do
-      []
+      binary_search
+    end
+    assert_raises ArgumentError do
+      binary_search([])
     end
   end
 end

@@ -5,3 +5,6 @@
 #
 #
 #####################################################################
+def binary_search(numbers)
+  raise ArgumentError, 'Array cannot be empty' if numbers.empty?
+end
