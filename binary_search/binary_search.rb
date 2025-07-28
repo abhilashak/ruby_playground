@@ -20,7 +20,9 @@ def binary_search(numbers, target)
   if target < numbers[mid]
     return binary_search(numbers[0...mid], target)
   elsif target > numbers[mid]
-    return binary_search(numbers[(mid + 1)..], target)
+    starting_index_of_right_half = mid + 1
+    result = binary_search(numbers[(starting_index_of_right_half)..], target)
+    return result == 'Not found' ? 'Not found' : result + starting_index_of_right_half
   end
 
   'Not found'
