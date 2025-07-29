@@ -1,29 +1,63 @@
 # frozen_string_literal: true
 
 #####################################################################
-# Given an array of numbers and a target value, this algorithm finds
-# then index of the target in the given array. If not found writes
-# 'Not found'
+# Binary Search Algorithm
+#
+# Given a sorted array of numbers and a target value, this algorithm finds
+# the index of the target in the given array. If not found returns nil.
+#
+# @param numbers [Array<Numeric>] A sorted array of numbers
+# @param target [Numeric] The value to search for
+# @return [Integer, nil] The index of the target if found, nil otherwise
+# @raise [ArgumentError] If numbers is not an array or target is nil
 #####################################################################
 def binary_search(numbers, target)
-  raise ArgumentError, 'Provide an array of numbers' unless numbers.is_a?(Array)
-  return 'Not found' if numbers.empty?
+  # Validate input parameters
+  validate_input(numbers, target)
 
-  if numbers.length == 1
-    return numbers[0] == target ? 0 : 'Not found'
-  end
+  # Handle empty array case
+  return nil if numbers.empty?
 
-  mid = (numbers.length / 2).to_i # calculate mid position
+  # Handle single element case
+  return (numbers.first == target ? 0 : nil) if numbers.length == 1
+
+  # Perform binary search
+  perform_binary_search(numbers, target)
+end
+
+def validate_input(numbers, target)
+  raise ArgumentError, 'First argument must be an array' unless numbers.is_a?(Array)
+
+  raise ArgumentError, 'Target cannot be nil' if target.nil?
+
+  return if target.is_a?(Numeric)
+
+  raise ArgumentError, 'Target must be a numeric value'
+end
+
+def perform_binary_search(numbers, target)
+  mid = numbers.length / 2
 
   return mid if target == numbers[mid]
 
   if target < numbers[mid]
-    return binary_search(numbers[0...mid], target)
-  elsif target > numbers[mid]
-    starting_index_of_right_half = mid + 1
-    result = binary_search(numbers[(starting_index_of_right_half)..], target)
-    return result == 'Not found' ? 'Not found' : result + starting_index_of_right_half
+    search_left_half(numbers, target, mid)
+  else
+    search_right_half(numbers, target, mid)
   end
+end
 
-  'Not found'
+def search_left_half(numbers, target, mid)
+  left_half = numbers[0...mid]
+  return nil if left_half.empty?
+
+  binary_search(left_half, target)
+end
+
+def search_right_half(numbers, target, mid)
+  right_half = numbers[(mid + 1)..]
+  return nil if right_half.empty?
+
+  result = binary_search(right_half, target)
+  result.nil? ? nil : result + mid + 1
 end

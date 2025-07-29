@@ -4,9 +4,9 @@ require 'minitest/autorun'
 require_relative 'binary_search'
 
 ########################################################################
-# Given an array of numbers and a target value, this algorithm finds
-# then index of the target in the given array. If not found writes
-# 'Not found'
+# Binary Search Test Suite
+#
+# Tests the binary search algorithm with various edge cases and scenarios
 ########################################################################
 class TestBinarySearch < Minitest::Test
   def setup; end
@@ -18,27 +18,27 @@ class TestBinarySearch < Minitest::Test
     assert_raises ArgumentError do
       binary_search
     end
-    assert_equal 'Not found', binary_search([], 3)
+    assert_nil binary_search([], 3)
   end
 
   def test_array_with_length_one
     assert_equal 0, binary_search([1], 1)
     assert_equal 0, binary_search([2], 2)
-    assert_equal 'Not found', binary_search([2], 3)
-    assert_equal 'Not found', binary_search([7], 9)
+    assert_nil binary_search([2], 3)
+    assert_nil binary_search([7], 9)
   end
 
   def test_array_with_length_two
     assert_equal 1, binary_search([1, 2], 2)
-    assert_equal 'Not found', binary_search([1, 2], 4)
+    assert_nil binary_search([1, 2], 4)
   end
 
   def test_array_with_length_three
     assert_equal 0, binary_search([1, 2, 3], 1)
     assert_equal 1, binary_search([1, 2, 3], 2)
     assert_equal 2, binary_search([1, 2, 3], 3)
-    assert_equal 'Not found', binary_search([1, 2, 3], 0)
-    assert_equal 'Not found', binary_search([1, 2, 3], 4)
+    assert_nil binary_search([1, 2, 3], 0)
+    assert_nil binary_search([1, 2, 3], 4)
   end
 
   def test_array_with_length_four
@@ -46,8 +46,8 @@ class TestBinarySearch < Minitest::Test
     assert_equal 1, binary_search([1, 2, 3, 4], 2)
     assert_equal 2, binary_search([1, 2, 3, 4], 3)
     assert_equal 3, binary_search([1, 2, 3, 4], 4)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4], 0)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4], 5)
+    assert_nil binary_search([1, 2, 3, 4], 0)
+    assert_nil binary_search([1, 2, 3, 4], 5)
   end
 
   def test_larger_arrays
@@ -55,16 +55,16 @@ class TestBinarySearch < Minitest::Test
     assert_equal 0, binary_search([1, 2, 3, 4, 5], 1)
     assert_equal 2, binary_search([1, 2, 3, 4, 5], 3)
     assert_equal 4, binary_search([1, 2, 3, 4, 5], 5)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4, 5], 0)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4, 5], 6)
+    assert_nil binary_search([1, 2, 3, 4, 5], 0)
+    assert_nil binary_search([1, 2, 3, 4, 5], 6)
 
     # Test with array of length 6
     assert_equal 0, binary_search([1, 2, 3, 4, 5, 6], 1)
     assert_equal 2, binary_search([1, 2, 3, 4, 5, 6], 3)
     assert_equal 4, binary_search([1, 2, 3, 4, 5, 6], 5)
     assert_equal 5, binary_search([1, 2, 3, 4, 5, 6], 6)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4, 5, 6], 0)
-    assert_equal 'Not found', binary_search([1, 2, 3, 4, 5, 6], 7)
+    assert_nil binary_search([1, 2, 3, 4, 5, 6], 0)
+    assert_nil binary_search([1, 2, 3, 4, 5, 6], 7)
   end
 
   def test_duplicate_elements
@@ -86,15 +86,15 @@ class TestBinarySearch < Minitest::Test
     assert_equal 2, binary_search([-3, -1, 0, 2, 5], 0)
     assert_equal 3, binary_search([-3, -1, 0, 2, 5], 2)
     assert_equal 4, binary_search([-3, -1, 0, 2, 5], 5)
-    assert_equal 'Not found', binary_search([-3, -1, 0, 2, 5], -2)
-    assert_equal 'Not found', binary_search([-3, -1, 0, 2, 5], 3)
+    assert_nil binary_search([-3, -1, 0, 2, 5], -2)
+    assert_nil binary_search([-3, -1, 0, 2, 5], 3)
   end
 
   def test_edge_cases
     # Test with very large numbers
     assert_equal 0, binary_search([1000, 2000, 3000], 1000)
     assert_equal 2, binary_search([1000, 2000, 3000], 3000)
-    assert_equal 'Not found', binary_search([1000, 2000, 3000], 1500)
+    assert_nil binary_search([1000, 2000, 3000], 1500)
 
     # Test with zero
     assert_equal 1, binary_search([-1, 0, 1], 0)
@@ -102,8 +102,8 @@ class TestBinarySearch < Minitest::Test
 
     # Test with single element edge cases
     assert_equal 0, binary_search([0], 0)
-    assert_equal 'Not found', binary_search([0], 1)
-    assert_equal 'Not found', binary_search([1], 0)
+    assert_nil binary_search([0], 1)
+    assert_nil binary_search([1], 0)
   end
 
   def test_invalid_inputs
@@ -128,6 +128,17 @@ class TestBinarySearch < Minitest::Test
     assert_raises ArgumentError do
       binary_search([1, 2, 3])
     end
+
+    # Test with non-numeric targets
+    assert_raises ArgumentError do
+      binary_search([1, 2, 3], nil)
+    end
+    assert_raises ArgumentError do
+      binary_search([1, 2, 3], 'string')
+    end
+    assert_raises ArgumentError do
+      binary_search([1, 2, 3], [])
+    end
   end
 
   def test_performance_edge_cases
@@ -136,7 +147,7 @@ class TestBinarySearch < Minitest::Test
     assert_equal 0, binary_search(large_array, 1)
     assert_equal 49, binary_search(large_array, 50)
     assert_equal 99, binary_search(large_array, 100)
-    assert_equal 'Not found', binary_search(large_array, 0)
-    assert_equal 'Not found', binary_search(large_array, 101)
+    assert_nil binary_search(large_array, 0)
+    assert_nil binary_search(large_array, 101)
   end
 end
